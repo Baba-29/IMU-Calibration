@@ -22,11 +22,27 @@ void setup() {
   mpu.setWire(&Wire);
 
   mpu.beginAccel();
-
+  mpu.setMaxSpeed(100);
 }
 
 void loop() {
   int result;
 
+  motor.setCurrentPosition(0);
+  while (motor.currentPosition() <= 4096) {
+    motor.moveTo(motor.currentPosition() + 8);
+    delay(1000);
+
+    result = mpu.accelUpdate();
+    if (result == 0) {
+      aX = mpu.accelX();
+      aY = mpu.accelY();
+      aZ = mpu.accelZ();
+    } else {
+      Serial.println("Cannot read accel values " + String(result));
+    }
+    delay(100);
+  }
+  
 
 }
