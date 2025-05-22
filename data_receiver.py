@@ -19,7 +19,16 @@ serialInst.baudrate = 115200
 serialInst.port = "COM" + str(val)
 serialInst.open()
 
+accel = []
+
 while True:
     if serialInst.in_waiting > 0:
         packet = serialInst.readline()
-        print(packet.decode("utf-8"))
+        accel.append(packet.decode("utf-8"))
+        if packet.decode("utf-8") == "0,0,0":
+            break
+
+with open("accel.txt", "a") as f
+    for x in accel:
+        f.write(x)
+
