@@ -22,7 +22,7 @@ void setup() {
   mpu.setWire(&Wire);
 
   mpu.beginAccel();
-  motor.setMaxSpeed(100);
+  mpu.setMaxSpeed(100);
 }
 
 void loop() {
@@ -41,12 +41,6 @@ void loop() {
     } else {
       Serial.println("Cannot read accel values " + String(result));
     }
-    Serial.write(int(aX * 100));
-    Serial.print(",");
-    Serial.write(int(aY * 100));
-    Serial.print(",");
-    Serial.write(int(aZ * 100));
-    Serial.print("\n");
     delay(100);
   }
   
