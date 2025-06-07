@@ -15,7 +15,7 @@ for x in range(len(portList)):
     if portList[x].startswith("COM" + str(val)):
         print(portList[x])
 
-serialInst.baudrate = 115200
+serialInst.baud = 115200
 serialInst.port = "COM" + str(val)
 serialInst.open()
 
@@ -28,7 +28,7 @@ while True:
         if packet.decode("utf-8") == "0,0,0":
             break
 
-with open("accel.txt", "a") as f
+with open("accel.txt", "a") as f:
     for x in accel:
         f.write(x)
 
