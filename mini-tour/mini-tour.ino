@@ -17,6 +17,7 @@ MPU9250_asukiaaa mpu;
 float aX, aY, aZ;
 
 OneButton button;
+bool measureState = false;
 
 void setup() {
   Serial.begin(115200);
@@ -26,18 +27,27 @@ void setup() {
   mpu.setWire(&Wire);
 
   button.setup(BUTTON_PIN, INPUT_PULLUP, true);
-  button.attachClick(oneClick);
-  button.attachDoubleClick(doubleClick);
-
+  button.attachClick(singleClick);
+  //button.attachDoubleClick(doubleClick);
+  
   mpu.beginAccel();
   motor.setMaxSpeed(100);
+
+
 }
 
 void loop() {
+  
+  button.tick();
+  delay(50);
+
+}
+
+void singleClick() {
   int result;
 
   motor.setCurrentPosition(0);
-  while (motor.currentPosition() <= 4096) {
+  while (motor.currentPosition() <= 4096 && measureState) {
     motor.moveTo(motor.currentPosition() + 8);
     delay(1000);
 
@@ -57,16 +67,7 @@ void loop() {
     Serial.print("\n");
     delay(100);
   }
-  Serial.println("0,0,0")
-  
-  button.tick();
-
+  Serial.println("0,0,0");
+  motor.moveTo(0);
 }
 
-void oneClick() {
-
-}
-
-void doubleClick() {
-
-}
